@@ -40,11 +40,11 @@ func main() {
 	anaconda.SetConsumerSecret(apiConf.ConsumerSecret)
 	api := anaconda.NewTwitterApi(apiConf.AccessToken, apiConf.AccessTokenSecret)
 
-	var track = os.Args[1]
-
 	v := url.Values{}
-	v.Set("track", track)
 	v.Set("tweet_mode", "extended")
+	for _, a := range os.Args {
+		v.Set("track", a)
+	}
 
 	twitterStream := api.PublicStreamFilter(v)
 	for {
