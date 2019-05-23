@@ -44,16 +44,18 @@ func main() {
 
 	v := url.Values{}
 	v.Set("track", track)
+	v.Set("tweet_mode", "extended")
 
 	twitterStream := api.PublicStreamFilter(v)
 	for {
 		x := <-twitterStream.C
 		switch tweet := x.(type) {
 		case anaconda.Tweet:
-			fmt.Println(tweet.User.Description)
-			fmt.Println(tweet.FullText)
-			fmt.Println(tweet.ExtendedEntities)
+			fmt.Println(tweet.User.CreatedAt)
+			fmt.Println(tweet.User.Name)
 			fmt.Println("https://twitter.com/" + tweet.User.ScreenName + "/status/" + tweet.IdStr)
+			fmt.Printf("\n")
+			fmt.Println(tweet.FullText)
 			fmt.Println("-----------")
 		case anaconda.StatusDeletionNotice:
 			// pass
