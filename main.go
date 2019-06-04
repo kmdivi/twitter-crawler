@@ -12,7 +12,7 @@ import (
 	"github.com/ChimeraCoder/anaconda"
 )
 
-var re = regexp.MustCompile("^[a-fA-Z0-9]{32}$")
+var re = regexp.MustCompile("[a-fA-F0-9]{32}")
 
 // APIConf contains api key
 type APIConf struct {
@@ -84,6 +84,11 @@ func main() {
 			fmt.Println(tweet.CreatedAt)
 			fmt.Println(tweet.User.Name)
 			fmt.Println(tweet.Text)
+			if tweet.RetweetedStatus.Text != "" {
+				fmt.Println("***")
+				fmt.Println(tweet.RetweetedStatus.Text)
+				fmt.Println("***")
+			}
 			fmt.Println("https://twitter.com/" + tweet.User.ScreenName + "/status/" + tweet.IdStr)
 			fmt.Printf("\n")
 			fmt.Println(tweet.FullText)
