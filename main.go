@@ -84,7 +84,7 @@ func main() {
 			fmt.Println(tweet.CreatedAt)
 			fmt.Println(tweet.User.Name)
 			fmt.Println(tweet.Text)
-			if tweet.RetweetedStatus.Text != "" {
+			if tweet.RetweetedStatus != nil {
 				fmt.Println("***")
 				fmt.Println(tweet.RetweetedStatus.Text)
 				fmt.Println("***")
