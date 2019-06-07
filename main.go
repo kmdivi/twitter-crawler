@@ -12,7 +12,9 @@ import (
 	"github.com/ChimeraCoder/anaconda"
 )
 
-var re = regexp.MustCompile("[a-fA-F0-9]{32}")
+var reMD5 = regexp.MustCompile("[a-fA-F0-9]{32}")
+var reSHA1 = regexp.MustCompile("[a-fA-F0-9]{40}")
+var reSHA256 = regexp.MustCompile("[a-fA-F0-9]{64}")
 
 // APIConf contains api key
 type APIConf struct {
@@ -29,10 +31,16 @@ func check(e error) {
 }
 
 // CheckHash gets hash value from tweet.
-func CheckHash(tweettext string) (hash [][]string) {
-	if re.MatchString(tweettext) == true {
-		hash := re.FindAllStringSubmatch(tweettext, -1)
-		return hash
+func CheckHash(tweettext string) [][]string {
+	if reSHA256.MatchString(tweettext) == true {
+		hashSHA256 := reSHA256.FindAllStringSubmatch(tweettext, -1)
+		return hashSHA256
+	} else if reSHA1.MatchString(tweettext) == true {
+		hashSHA1 := reSHA1.FindAllStringSubmatch(tweettext, -1)
+		return hashSHA1
+	} else if reMD5.MatchString(tweettext) == true {
+		hashMD5 := reMD5.FindAllStringSubmatch(tweettext, -1)
+		return hashMD5
 	}
 	return nil
 }
